@@ -8,7 +8,8 @@ async function bootstrap() {
   
   app.use(cookieParser());
   app.enableCors({
-  origin: "http://DROPLET_IP:5173", 
+  //origin: "http://DROPLET_IP:5173", 
+  origin: "https://sistema.digitalmax.cc/", 
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type, Authorization",

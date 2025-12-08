@@ -34,9 +34,18 @@ jobs:
           REG: ${{ secrets.REGISTRY_NAME }}
           IMG: ${{ secrets.IMAGE_NAME }}
         run: |
+          # Usar ruta relativa al Dockerfile
+          if [ -f "digitalmax-back-end/Dockerfile" ]; then
+            echo "Dockerfile encontrado en digitalmax-back-end/"
+            cat digitalmax-back-end/Dockerfile
+          elif [ -f "./Dockerfile" ]; then
+            echo "Dockerfile encontrado en ./"
+            cat ./Dockerfile
+          fi
           TAG=$(echo $GITHUB_SHA | head -c7)
-          echo "TAG=$TAG"
-          docker build -f Dockerfile -t $REG/$IMG:$TAG .
+    
+          # Construir desde la carpeta correcta
+          docker build -f digitalmax-back-end/Dockerfile -t $REG/$IMG:$TAG digitalmax-back-end/
           docker push $REG/$IMG:$TAG
           docker tag $REG/$IMG:$TAG $REG/$IMG:latest
           docker push $REG/$IMG:latest

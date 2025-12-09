@@ -143,4 +143,9 @@ export class UserController {
     }
     return consult;
   }
+
+  @Delete(':id/carrito/compra')
+  async eliminarCarrito(@Param('id') id:string){
+      return this.userService.elimianrCarrito(id)
+  }
 }

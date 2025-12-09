@@ -173,5 +173,26 @@ export class UserService {
 
     ).exec();
   }
+
+  async elimianrCarrito(id: string){
+    const user = this.userModel.findById(id)
+    if(!user){
+      return response.status(401)
+    }
+    await this.userModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          'carrito': []
+        }
+      },
+      {
+        new: true
+      }
+
+    ).exec();
+
+    return response.status(201)
+  }
 }
 

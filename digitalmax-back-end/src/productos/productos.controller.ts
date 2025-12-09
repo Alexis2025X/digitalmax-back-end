@@ -13,6 +13,7 @@ import {
 import { ProductosService } from './productos.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
+import { actualizarStockDTO } from './dto/ajusteStock.dto';
 import { CreateReseña } from './dto/create-producto.dto';
 @Controller('productos')
 export class ProductosController {
@@ -57,5 +58,15 @@ export class ProductosController {
             throw error;
           }
       }
+  
+  @Put('/compra/:id')
+    actualizarStock(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) actualizarStockDTO: actualizarStockDTO,
+  ) 
+  {
+    
+    return this.productosService.ajusteStock(id, actualizarStockDTO);
+  }
 
 }

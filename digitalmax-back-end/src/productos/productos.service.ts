@@ -4,6 +4,8 @@ import { UpdateProductoDto } from './dto/update-producto.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Producto } from './schemas/productos.schema';
 import { Model } from 'mongoose';
+import { actualizarStockDTO } from './dto/ajusteStock.dto';
+import { response } from 'express';
 import { CreateReseña } from './dto/create-producto.dto';
 @Injectable()
 export class ProductosService {
@@ -54,5 +56,31 @@ export class ProductosService {
           {new:true}
       )
   
+    }
+    async ajusteStock(idProduct:string, datos:actualizarStockDTO){
+        let producto = await this.ProductoModel.findById(idProduct)
+        const stock = producto?.stock
+
+        let nuevoSTOCK = stock != undefined ? stock - datos.cantidadSelect: -1
+      
+          console.log("fuera del  if")
+        const validacion = stock != undefined? stock: -1
+        console.log(validacion)
+         if( validacion <= 0){
+          console.log("entramos al if")
+          return response.status(404)
+          } 
+
+        if(nuevoSTOCK === -1){
+        return response.status(404)
+      }
+
+      if (producto) {
+        producto.stock = nuevoSTOCK;
+        await this.ProductoModel.findByIdAndUpdate(idProduct,producto)
+        return response.status(201)
+        }
+        return response.status(404)
+
     }
 }

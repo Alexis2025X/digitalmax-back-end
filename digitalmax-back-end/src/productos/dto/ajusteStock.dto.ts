@@ -1,7 +1,7 @@
-import { IsNumber,IsNotEmpty } from "Class-validator";
+import { IsNumber, IsNotEmpty } from 'class-validator';
 
-export class actualizarStockDTO{
-        @IsNumber()
-        @IsNotEmpty()
-        cantidadSelect: number;
+export class actualizarStockDTO {
+  @IsNumber()
+  @IsNotEmpty()
+  cantidadSelect: number;
 }
